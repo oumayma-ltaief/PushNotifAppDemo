@@ -6,8 +6,8 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
-
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform) 
+{
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,7 +20,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-  });
+  window.plugins.OneSignal.setLogLevel({logLevel: 0, visualLevel: 0});
+  
+  var notificationOpenedCallback = function(jsonData) 
+  {
+    alert("Notification is received!");
+  };
+
+  window.plugins.OneSignal.init("da5b14bd-1376-4eda-af11-3bbf4c6b28f4",
+                                 {googleProjectNumber: "390533721799"},
+                                 notificationOpenedCallback);
+  window.plugins.OneSignal.setSubscription(true);
+  window.plugins.OneSignal.enableNotificationsWhenActive(true);                                 
+})
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
